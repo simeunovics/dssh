@@ -1,71 +1,61 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const fs = require('fs');
-const { exec, spawn } = require('child_process');
 const inquirer = require('inquirer');
+const { exec, spawn } = require('child_process');
 
-const PICK_CONTAINER_QUESTION = 'Select container to SSH into';
-const PICK_USER_QUESTION = 'As which user?';
 const BYE_MESSAGE = 'Bye... 👋';
+const PICK_USER_QUESTION = 'As user';
+const PICK_CONTAINER_QUESTION = 'Attach to container';
 const DOCKER_PS_FORMAT = "--format '{{.ID}}\t{{.Names}}'";
 
-const shellExec = command => {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout) => {
-      if (error) {
-        return reject(error);
-      }
-
-      return resolve(stdout);
-    });
+const shellExec = command =>
+  new Promise((resolve, reject) => {
+    exec(command, (error, stdout) => (error ? reject(error) : resolve(stdout)));
   });
+
+const getRunningContainers = async () => {
+  const dockerContainers = await shellExec(`docker ps ${DOCKER_PS_FORMAT}`);
+
+  return dockerContainers
+    .trim()
+    .split('\n')
+    .map(row => {
+      [id, name] = row.split('\t');
+
+      return {
+        id: id.trim(),
+        name: name.trim(),
+      };
+    });
 };
 
 (async () => {
   try {
-    const hasDockerCompose = fs.existsSync(
-      path.join(__dirname, 'docker-compose.yml'),
-    );
-    const command =
-      (hasDockerCompose ? 'docker-compose' : 'docker') +
-      ' ps '+ DOCKER_PS_FORMAT;
-
-    const dockerContainers = await shellExec(command);
-    const choices = dockerContainers
-      .trim()
-      .split('\n')
-      .map(row => {
-        [id, name] = row.split('\t');
-
-        return {
-          id: id.trim(),
-          name: name.trim(),
-        };
-      });
+    const runningContainers = await getRunningContainers();
 
     const answers = await inquirer.prompt([
       {
         type: 'list',
         name: PICK_CONTAINER_QUESTION,
-        choices: choices.map(({ name, id }) => name),
+        choices: runningContainers.map(({ name }) => name),
       },
       { type: 'input', name: PICK_USER_QUESTION, default: 'root' },
     ]);
-    const containerId = choices
+
+    const containerId = runningContainers
       .filter(({ name }) => name === answers[PICK_CONTAINER_QUESTION])
       .reduce((next, prev) => ({ ...next, ...prev })).id;
 
-    const user = answers[PICK_USER_QUESTION];
-
     const ssh = await spawn(
       'docker',
-      `exec --user ${user} -it ${containerId} bash`.split(' '),
+      `exec --user ${
+        answers[PICK_USER_QUESTION]
+      } -it ${containerId} bash`.split(' '),
       {
         stdio: 'inherit',
       },
     );
-    ssh.on('exit', () => console.log('\033c', BYE_MESSAGE));
+    ssh.on('exit', () => console.log(BYE_MESSAGE));
 
     return 0;
   } catch (e) {
