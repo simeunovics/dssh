@@ -1,12 +1,18 @@
-//@flow
+#!/usr/bin/env
+
 const path = require('path');
 const fs = require('fs');
 const { exec, spawn } = require('child_process');
 const inquirer = require('inquirer');
 
+const PICK_CONTAINER_QUESTION = 'Select container to SSH into';
+const PICK_USER_QUESTION = 'As which user?';
+const BYE_MESSAGE = 'Bye... 👋';
+const DOCKER_PS_FORMAT = "--format '{{.ID}}\t{{.Names}}'";
+
 const shellExec = command => {
   return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
+    exec(command, (error, stdout) => {
       if (error) {
         return reject(error);
       }
@@ -23,10 +29,10 @@ const shellExec = command => {
     );
     const command =
       (hasDockerCompose ? 'docker-compose' : 'docker') +
-      " ps --format '{{.ID}}\t{{.Names}}'";
+      ' ps '+ DOCKER_PS_FORMAT;
 
-    const res = await shellExec(command);
-    const choices = res
+    const dockerContainers = await shellExec(command);
+    const choices = dockerContainers
       .trim()
       .split('\n')
       .map(row => {
@@ -38,23 +44,19 @@ const shellExec = command => {
         };
       });
 
-    const containerPickQuestion = 'Select container to SSH into';
-    const userPickQuestion = 'As which user?';
     const answers = await inquirer.prompt([
       {
         type: 'list',
-        name: containerPickQuestion,
+        name: PICK_CONTAINER_QUESTION,
         choices: choices.map(({ name, id }) => name),
       },
-      { type: 'input', name: userPickQuestion, default: 'root' },
+      { type: 'input', name: PICK_USER_QUESTION, default: 'root' },
     ]);
     const containerId = choices
-      .filter(
-        choice => choice.name.trim() === answers[containerPickQuestion].trim(),
-      )
+      .filter(({ name }) => name === answers[PICK_CONTAINER_QUESTION])
       .reduce((next, prev) => ({ ...next, ...prev })).id;
 
-    const user = answers[userPickQuestion];
+    const user = answers[PICK_USER_QUESTION];
 
     const ssh = await spawn(
       'docker',
@@ -63,7 +65,7 @@ const shellExec = command => {
         stdio: 'inherit',
       },
     );
-    ssh.on('exit', () => console.log('\033c', 'Bye... 👋'));
+    ssh.on('exit', () => console.log('\033c', BYE_MESSAGE));
 
     return 0;
   } catch (e) {

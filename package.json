@@ -1,10 +1,11 @@
 {
   "name": "dssh",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "CLI utility for attaching to running docker containers",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node app.js",
+    "start": "node src/app.js"
   },
   "keywords": [],
   "author": "Simo Simeunovic",
