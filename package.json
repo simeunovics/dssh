@@ -1,12 +1,12 @@
 {
   "name": "dssh",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "CLI utility for attaching to running docker containers",
   "main": "src/app.js",
   "scripts": {
-    "build": "node app.js",
     "start": "node src/app.js"
   },
+  "bin": "src/app.js",
   "keywords": [],
   "author": "Simo Simeunovic",
   "license": "MIT",
