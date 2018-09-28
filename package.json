@@ -1,15 +1,23 @@
 {
   "name": "dssh",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CLI utility for attaching to running docker containers",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Simo Simeunovic",
+  "license": "MIT",
   "dependencies": {
     "inquirer": "^6.2.0"
+  },
+  "homepage": "https://github.com/simeunovics/dssh",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simeunovics/dssh.git"
+  },
+  "engines": {
+    "node": ">= 10.0.0"
   }
 }
