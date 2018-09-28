@@ -38,26 +38,32 @@ const shellExec = command => {
         };
       });
 
-    const question = 'Select container to SSH into';
+    const containerPickQuestion = 'Select container to SSH into';
+    const userPickQuestion = 'As which user?';
     const answers = await inquirer.prompt([
       {
         type: 'list',
-        name: question,
+        name: containerPickQuestion,
         choices: choices.map(({ name, id }) => name),
       },
+      { type: 'input', name: userPickQuestion, default: 'root' },
     ]);
     const containerId = choices
-      .filter(choice => choice.name.trim() === answers[question].trim())
-      .reduce((next, prev) => ({ ...next, ...prev }), {}).id;
+      .filter(
+        choice => choice.name.trim() === answers[containerPickQuestion].trim(),
+      )
+      .reduce((next, prev) => ({ ...next, ...prev })).id;
+
+    const user = answers[userPickQuestion];
 
     const ssh = await spawn(
       'docker',
-      `exec -it ${containerId} bash`.split(' '),
+      `exec --user ${user} -it ${containerId} bash`.split(' '),
       {
         stdio: 'inherit',
       },
     );
-    ssh.on('exit', () => console.log('👋'));
+    ssh.on('exit', () => console.log('\033c', 'Bye... 👋'));
 
     return 0;
   } catch (e) {
