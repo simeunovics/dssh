@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/app.js"
   },
-  "bin": "src/app.js",
+  "bin": {
+    "dssh": "./src/app.js"
+  },
   "keywords": [],
   "author": "Simo Simeunovic",
   "license": "MIT",
