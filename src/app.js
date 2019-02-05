@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const inquirer = require('inquirer');
-const { exec, spawn } = require('child_process');
+const inquirer = require("inquirer");
+const { exec, spawn } = require("child_process");
 
-const BYE_MESSAGE = 'Bye... 👋';
-const PICK_USER_QUESTION = 'As user';
-const PICK_CONTAINER_QUESTION = 'Attach to container';
+const BYE_MESSAGE = "Bye... 👋";
+const PICK_USER_QUESTION = "As user";
+const PICK_CONTAINER_QUESTION = "Attach to container";
 const DOCKER_PS_FORMAT = "--format '{{.ID}}\t{{.Names}}'";
 
 const shellExec = command =>
@@ -18,13 +18,14 @@ const getRunningContainers = async () => {
 
   return dockerContainers
     .trim()
-    .split('\n')
+    .split("\n")
+    .filter(row => Boolean(row.length))
     .map(row => {
-      [id, name] = row.split('\t');
+      [id, name] = row.split("\t");
 
       return {
         id: id.trim(),
-        name: name.trim(),
+        name: name.trim()
       };
     });
 };
@@ -32,14 +33,18 @@ const getRunningContainers = async () => {
 (async () => {
   try {
     const runningContainers = await getRunningContainers();
+    if (!Boolean(runningContainers.length)) {
+      console.info("No running containers found!");
+      return;
+    }
 
     const answers = await inquirer.prompt([
       {
-        type: 'list',
+        type: "list",
         name: PICK_CONTAINER_QUESTION,
-        choices: runningContainers.map(({ name }) => name),
+        choices: runningContainers.map(({ name }) => name)
       },
-      { type: 'input', name: PICK_USER_QUESTION, default: 'root' },
+      { type: "input", name: PICK_USER_QUESTION, default: "root" }
     ]);
 
     const containerId = runningContainers
@@ -47,15 +52,15 @@ const getRunningContainers = async () => {
       .reduce((next, prev) => ({ ...next, ...prev })).id;
 
     const ssh = await spawn(
-      'docker',
+      "docker",
       `exec --user ${
         answers[PICK_USER_QUESTION]
-      } -it ${containerId} bash`.split(' '),
+      } -it ${containerId} bash`.split(" "),
       {
-        stdio: 'inherit',
-      },
+        stdio: "inherit"
+      }
     );
-    ssh.on('exit', () => console.log(BYE_MESSAGE));
+    ssh.on("exit", () => console.log(BYE_MESSAGE));
 
     return 0;
   } catch (e) {

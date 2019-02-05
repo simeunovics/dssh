@@ -1,6 +1,6 @@
 {
   "name": "dssh",
-  "version": "1.3.2",
+  "version": "1.4.1",
   "description": "CLI utility for attaching to running docker containers",
   "main": "src/app.js",
   "scripts": {
