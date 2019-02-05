@@ -59,6 +59,6 @@ const getRunningContainers = async () => {
 
     return 0;
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
   }
 })();
