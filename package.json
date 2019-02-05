@@ -13,7 +13,7 @@
   "author": "Simo Simeunovic",
   "license": "MIT",
   "dependencies": {
-    "inquirer": "^6.2.0"
+    "inquirer": "^6.2.2"
   },
   "homepage": "https://github.com/simeunovics/dssh",
   "repository": {
