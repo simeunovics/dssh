@@ -2,11 +2,16 @@
 
 import * as inquirer from "inquirer";
 import attachToRunningContainer from "./attachToRunningContainer";
+import dockerStop from "./dockerStop";
 
 const tasks: { displayText: string; callback: () => Promise<Boolean> }[] = [
   {
     displayText: "Attach to running container",
     callback: attachToRunningContainer
+  },
+  {
+    displayText: "Stop all running containers",
+    callback: dockerStop
   }
 ];
 

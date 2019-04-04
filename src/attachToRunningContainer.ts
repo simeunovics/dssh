@@ -1,20 +1,11 @@
 import * as inquirer from "inquirer";
-import { exec, spawn, ExecException } from "child_process";
+import { spawn } from "child_process";
+import { shellExec } from "./helpers";
 
 const BYE_MESSAGE = "Bye... 👋";
 const PICK_USER_QUESTION = "As user";
 const PICK_CONTAINER_QUESTION = "Attach to container";
 const DOCKER_PS_FORMAT = "--format '{{.ID}}\t{{.Names}}'";
-
-const shellExec = async (command: string) =>
-  new Promise<string>((resolve: Function, reject: Function) => {
-    exec(
-      command,
-      (error: ExecException | null, stdout: string, stderr: string): string => {
-        return error ? reject(stderr) : resolve(stdout);
-      }
-    );
-  });
 
 const getRunningContainers = async () => {
   const dockerContainers: string = await shellExec(
