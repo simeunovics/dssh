@@ -3,6 +3,7 @@
 import * as inquirer from "inquirer";
 import attachToRunningContainer from "./attachToRunningContainer";
 import dockerStop from "./dockerStop";
+import dockerNuke from "./dockerNuke";
 
 const tasks: { displayText: string; callback: () => Promise<Boolean> }[] = [
   {
@@ -12,6 +13,10 @@ const tasks: { displayText: string; callback: () => Promise<Boolean> }[] = [
   {
     displayText: "Stop all running containers",
     callback: dockerStop
+  },
+  {
+    displayText: "⚠️ ⚠️ ⚠️ Stop and remove ALL containers and ALL images ☢️ ☢️ ☢️",
+    callback: dockerNuke
   }
 ];
 
