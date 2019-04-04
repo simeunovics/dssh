@@ -4,7 +4,9 @@
   "description": "CLI utility for attaching to running docker containers",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "npm run build; node build/app.js",
+    "build": "tsc",
+    "watch": "npm run build -- -w"
   },
   "bin": {
     "dssh": "./src/app.js"
@@ -22,5 +24,9 @@
   },
   "engines": {
     "node": ">= 10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "typescript": "^3.4.1"
   }
 }

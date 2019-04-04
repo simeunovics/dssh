@@ -1,27 +1,34 @@
 #!/usr/bin/env node
 
-const inquirer = require("inquirer");
-const { exec, spawn } = require("child_process");
+import * as inquirer from "inquirer";
+import { exec, spawn, ExecException } from "child_process";
 
 const BYE_MESSAGE = "Bye... 👋";
 const PICK_USER_QUESTION = "As user";
 const PICK_CONTAINER_QUESTION = "Attach to container";
 const DOCKER_PS_FORMAT = "--format '{{.ID}}\t{{.Names}}'";
 
-const shellExec = command =>
-  new Promise((resolve, reject) => {
-    exec(command, (error, stdout) => (error ? reject(error) : resolve(stdout)));
+const shellExec = async (command: string) =>
+  new Promise<string>((resolve: Function, reject: Function) => {
+    exec(
+      command,
+      (error: ExecException | null, stdout: string, stderr: string): string => {
+        return error ? reject(stderr) : resolve(stdout);
+      }
+    );
   });
 
 const getRunningContainers = async () => {
-  const dockerContainers = await shellExec(`docker ps ${DOCKER_PS_FORMAT}`);
+  const dockerContainers: string = await shellExec(
+    `docker ps ${DOCKER_PS_FORMAT}`
+  );
 
   return dockerContainers
     .trim()
     .split("\n")
     .filter(row => Boolean(row.length))
     .map(row => {
-      [id, name] = row.split("\t");
+      const [id, name] = row.split("\t");
 
       return {
         id: id.trim(),
