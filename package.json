@@ -1,7 +1,7 @@
 {
   "name": "dssh",
-  "version": "1.4.1",
-  "description": "CLI utility for attaching to running docker containers",
+  "version": "2.0.0",
+  "description": "CLI utility providing handy docker shortcuts",
   "main": "src/app.js",
   "scripts": {
     "start": "npm run build; node build/app.js",
