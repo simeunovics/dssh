@@ -15,7 +15,7 @@ const tasks: { displayText: string; callback: () => Promise<Boolean> }[] = [
     callback: dockerStop
   },
   {
-    displayText: "⚠️ ⚠️ ⚠️ Stop and remove ALL containers and ALL images ☢️ ☢️ ☢️",
+    displayText: "Stop and remove ALL containers and ALL images ⚠️",
     callback: dockerNuke
   }
 ];
