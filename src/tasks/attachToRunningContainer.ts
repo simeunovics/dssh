@@ -1,6 +1,6 @@
 import * as inquirer from "inquirer";
 import { spawn } from "child_process";
-import { shellExec } from "./helpers";
+import { shellExec } from "../helpers";
 
 const BYE_MESSAGE = "Bye... 👋";
 const PICK_USER_QUESTION = "As user";
@@ -26,7 +26,7 @@ const getRunningContainers = async () => {
     });
 };
 
-export default async function attachToRunningContainer(): Promise<Boolean> {
+async function attachToRunningContainer(): Promise<Boolean> {
   try {
     const runningContainers = await getRunningContainers();
     if (!Boolean(runningContainers.length)) {
@@ -51,7 +51,7 @@ export default async function attachToRunningContainer(): Promise<Boolean> {
       "docker",
       `exec --user ${
         answers[PICK_USER_QUESTION]
-      } -it ${containerId} bash`.split(" "),
+        } -it ${containerId} bash`.split(" "),
       {
         stdio: "inherit"
       }
@@ -63,4 +63,9 @@ export default async function attachToRunningContainer(): Promise<Boolean> {
     console.error(e.message);
     return false;
   }
+}
+
+export default {
+  displayText: "Attach to running container",
+  callback: attachToRunningContainer
 }

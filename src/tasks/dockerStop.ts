@@ -1,6 +1,6 @@
-import { shellExec } from "./helpers";
+import { shellExec } from "../helpers";
 
-export default async function dockerStop(): Promise<Boolean> {
+async function dockerStop(): Promise<Boolean> {
   try {
     console.log("🛑 Stopping all containers...");
     const response = await shellExec("docker stop $(docker ps -a -q);");
@@ -12,4 +12,9 @@ export default async function dockerStop(): Promise<Boolean> {
     console.error(e);
     return false;
   }
+}
+
+export default {
+  displayText: "Stop all running containers",
+  callback: dockerStop
 }

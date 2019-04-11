@@ -1,6 +1,6 @@
-import { shellExec } from "./helpers";
+import { shellExec } from "../helpers";
 
-export default async function dockerStop(): Promise<Boolean> {
+async function dockerStop(): Promise<Boolean> {
   try {
     console.log("Removing EVERYTHING 💥");
     const response = await shellExec(
@@ -14,4 +14,9 @@ export default async function dockerStop(): Promise<Boolean> {
     console.error(e);
     return false;
   }
+}
+
+export default {
+  displayText: "Stop and remove ALL containers and ALL images ⚠️",
+  callback: dockerStop
 }

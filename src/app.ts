@@ -1,24 +1,7 @@
 #!/usr/bin/env node
 
 import * as inquirer from "inquirer";
-import attachToRunningContainer from "./attachToRunningContainer";
-import dockerStop from "./dockerStop";
-import dockerNuke from "./dockerNuke";
-
-const tasks: { displayText: string; callback: () => Promise<Boolean> }[] = [
-  {
-    displayText: "Attach to running container",
-    callback: attachToRunningContainer
-  },
-  {
-    displayText: "Stop all running containers",
-    callback: dockerStop
-  },
-  {
-    displayText: "Stop and remove ALL containers and ALL images ⚠️",
-    callback: dockerNuke
-  }
-];
+import tasks from './tasks';
 
 (async () => {
   try {
