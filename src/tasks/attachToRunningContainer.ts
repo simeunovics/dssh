@@ -1,27 +1,23 @@
-#!/usr/bin/env node
-
-const inquirer = require("inquirer");
-const { exec, spawn } = require("child_process");
+import * as inquirer from "inquirer";
+import { spawn } from "child_process";
+import { shellExec } from "../helpers";
 
 const BYE_MESSAGE = "Bye... 👋";
 const PICK_USER_QUESTION = "As user";
 const PICK_CONTAINER_QUESTION = "Attach to container";
 const DOCKER_PS_FORMAT = "--format '{{.ID}}\t{{.Names}}'";
 
-const shellExec = command =>
-  new Promise((resolve, reject) => {
-    exec(command, (error, stdout) => (error ? reject(error) : resolve(stdout)));
-  });
-
 const getRunningContainers = async () => {
-  const dockerContainers = await shellExec(`docker ps ${DOCKER_PS_FORMAT}`);
+  const dockerContainers: string = await shellExec(
+    `docker ps ${DOCKER_PS_FORMAT}`
+  );
 
   return dockerContainers
     .trim()
     .split("\n")
     .filter(row => Boolean(row.length))
     .map(row => {
-      [id, name] = row.split("\t");
+      const [id, name] = row.split("\t");
 
       return {
         id: id.trim(),
@@ -30,7 +26,7 @@ const getRunningContainers = async () => {
     });
 };
 
-(async () => {
+async function attachToRunningContainer(): Promise<Boolean> {
   try {
     const runningContainers = await getRunningContainers();
     if (!Boolean(runningContainers.length)) {
@@ -55,15 +51,21 @@ const getRunningContainers = async () => {
       "docker",
       `exec --user ${
         answers[PICK_USER_QUESTION]
-      } -it ${containerId} bash`.split(" "),
+        } -it ${containerId} bash`.split(" "),
       {
         stdio: "inherit"
       }
     );
     ssh.on("exit", () => console.log(BYE_MESSAGE));
 
-    return 0;
+    return true;
   } catch (e) {
     console.error(e.message);
+    return false;
   }
-})();
+}
+
+export default {
+  displayText: "Attach to running container",
+  callback: attachToRunningContainer
+}
