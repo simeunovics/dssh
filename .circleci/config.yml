@@ -23,7 +23,7 @@ jobs:
           command: 'sudo npm install -g npm@latest'
       - run:
           name: install-ts
-          command: 'sudo npm install -g typescript@latest'
+          command: 'sudo npm install -g typescript'
 
       # Download and cache dependencies
       - restore_cache:
