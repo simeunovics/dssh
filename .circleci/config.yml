@@ -6,7 +6,6 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:11.13
 
     working_directory: ~/repo
@@ -17,11 +16,9 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run: npm install
