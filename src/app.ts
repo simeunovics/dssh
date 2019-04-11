@@ -19,7 +19,7 @@ import tasks from './tasks';
 
     await tasks[answer[QUESTION]].callback();
 
-    return "Bey...";
+    return "Bye...";
   } catch (e) {
     console.error(e.message);
   }
