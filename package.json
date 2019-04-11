@@ -9,7 +9,7 @@
     "watch": "npm run build -- -w"
   },
   "bin": {
-    "dssh": "./src/app.js"
+    "dssh": "./build/app.js"
   },
   "keywords": [],
   "author": "Simo Simeunovic <simeunovics@gmail.com>",
