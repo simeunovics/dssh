@@ -31,7 +31,7 @@ jobs:
   publish:
     branches:
       only:
-        - master
+        - /releases.*/
     docker:
       - image: circleci/node:11.13
 
