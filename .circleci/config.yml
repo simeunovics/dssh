@@ -60,10 +60,10 @@ jobs:
 
 workflows:
   version: 2
-  build-deploy:
+  build-publish:
     jobs:
       - build:
-      - deploy:
+      - publish:
           requires:
             - build
           filters:
