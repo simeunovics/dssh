@@ -1,4 +1,4 @@
-import { exec, spawn, ExecException } from "child_process";
+import { exec, ExecException } from "child_process";
 
 export async function shellExec(command: string) {
   return new Promise<string>((resolve: Function, reject: Function) => {
