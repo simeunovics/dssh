@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "outDir": "build",
     "module": "commonjs",
-    "outDir": "build"
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "allowJs": true
   },
-  "include": ["src/**/*.ts", "src/**/*.js"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"]
 }
