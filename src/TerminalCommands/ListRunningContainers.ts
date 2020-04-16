@@ -5,7 +5,7 @@ class ListRunningContainers implements ITerminalCommand {
   public constructor(private terminal: ITerminal = terminal) {}
 
   public async toString() {
-    return "docker ps --format '{{.ID}}\t{{.Names}}'";
+    return `docker ps --format '{{.ID}}\t{{.Names}}'`;
   }
   public async getDescription() {
     return 'Get list of running containers';
