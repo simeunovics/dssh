@@ -9,7 +9,10 @@ class NukeEverything implements ITerminalCommand {
   }
 
   public async getDescription() {
-    return 'Wipe out all unused(stopped) docker resources. It will remove all containers, images, volumes, networks etc.';
+    return (
+      'Wipe out all unused(stopped) docker resources.' +
+      ' It will remove all containers, images, volumes, networks etc.'
+    );
   }
 
   public async execute(): Promise<void> {
