@@ -8,8 +8,8 @@
     "build": "tsc",
     "watch": "npm run build -- -w",
     "test": "jest",
-    "coverage": "jest --coverage",
-    "tdd": "jest --watch"
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "bin": {
     "dssh": "./build/app.js"
