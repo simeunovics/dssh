@@ -1,6 +1,6 @@
 import createCommand from '../TerminalCommands/NukeEverything';
 
-async function dockerStop(): Promise<Boolean> {
+async function dockerStop(): Promise<boolean> {
   try {
     const command = createCommand();
 

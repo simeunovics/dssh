@@ -11,7 +11,7 @@ const getRunningContainers = async () => {
   return terminalCommand.execute();
 };
 
-async function attachToRunningContainer(): Promise<Boolean> {
+async function attachToRunningContainer(): Promise<boolean> {
   try {
     const runningContainers = await getRunningContainers();
 

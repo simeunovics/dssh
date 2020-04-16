@@ -1,6 +1,6 @@
 import createCommand from '../TerminalCommands/StopContainers';
 
-async function dockerStop(): Promise<Boolean> {
+async function dockerStop(): Promise<boolean> {
   try {
     const command = createCommand();
 

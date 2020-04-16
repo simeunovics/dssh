@@ -1,6 +1,6 @@
 interface ITask {
   displayText: string;
-  callback: () => Promise<Boolean>;
+  callback: () => Promise<boolean>;
 }
 import attachToRunningContainer from './attachToRunningContainer';
 import dockerStop from './dockerStop';
