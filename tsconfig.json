@@ -9,5 +9,5 @@
     "sourceMap": true,
     "allowJs": true
   },
-  "include": ["src/**/*", "tests/**/*"]
+  "include": ["src/**/*"]
 }
