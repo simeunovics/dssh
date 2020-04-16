@@ -1,5 +1,5 @@
-import { exec, ExecException } from 'child_process';
-import { ITerminalCommand, ITerminal } from '../Interfaces';
+import { exec, ExecException, spawn } from 'child_process';
+import { ITerminal } from '../Interfaces';
 
 class Terminal implements ITerminal {
   public async execute(command: string): Promise<string> {
@@ -14,6 +14,23 @@ class Terminal implements ITerminal {
           return error ? reject(stderr) : resolve(stdout);
         }
       );
+    });
+  }
+
+  public async interactiveShell(command: string): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const [program, ...args] = command.split(' ');
+
+        const client = await spawn(program, args, {
+          stdio: 'inherit',
+          shell: true,
+        });
+
+        client.on('exit', resolve);
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 }
