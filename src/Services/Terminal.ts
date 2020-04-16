@@ -3,17 +3,17 @@ import { ITerminal } from '../Interfaces';
 
 class Terminal implements ITerminal {
   public async execute(command: string): Promise<string> {
-    return new Promise<string>((resolve: Function, reject: Function) => {
-      exec(
-        command,
-        (
-          error: ExecException | null,
-          stdout: string,
-          stderr: string
-        ): string => {
-          return error ? reject(stderr) : resolve(stdout);
-        }
-      );
+    return new Promise((resolve, reject) => {
+      try {
+        exec(
+          command,
+          (error: ExecException | null, stdout: string, stderr: string) => {
+            error ? reject(stderr) : resolve(stdout);
+          }
+        );
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 
