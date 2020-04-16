@@ -36,6 +36,6 @@ test('it can attach to running container', async () => {
   );
   await command.execute();
 
-  expect(terminal.execute).toBeCalledTimes(1);
-  expect(terminal.execute).toBeCalledWith(await command.toString());
+  expect(terminal.interactiveShell).toBeCalledTimes(1);
+  expect(terminal.interactiveShell).toBeCalledWith(await command.toString());
 });
