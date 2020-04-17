@@ -4,45 +4,30 @@ import { ListRunningContainers } from '../TerminalCommands/ListRunningContainers
 import { NukeEverything } from '../TerminalCommands/NukeEverything';
 import { StopContainers } from '../TerminalCommands/StopContainers';
 
-export enum Commands {
-  AttachToContainer = 'AttachToContainer',
-  ListRunningContainers = 'ListRunningContainers',
-  NukeEverything = 'NukeEverything',
-  StopContainers = 'StopContainers',
-}
+class Factory {
+  public constructor(private terminal = createTerminalInstance()) {}
 
-type CommandTypeConstructorMap = Record<Commands, (args?: any) => Promise<any>>;
+  public async ListRunningContainers(): Promise<ListRunningContainers> {
+    return new ListRunningContainers(this.terminal);
+  }
 
-const ConstructorMap: CommandTypeConstructorMap = {
-  [Commands.ListRunningContainers]: async (): Promise<
-    ListRunningContainers
-  > => {
-    const terminal = createTerminalInstance();
-    return new ListRunningContainers(terminal);
-  },
+  public async NukeEverything(): Promise<NukeEverything> {
+    return new NukeEverything(this.terminal);
+  }
 
-  [Commands.AttachToContainer]: async (options: {
+  public async StopContainers(): Promise<StopContainers> {
+    return new StopContainers(this.terminal);
+  }
+
+  public async AttachToContainer(options: {
     containerId: string;
     user: string;
-  }): Promise<AttachToContainer> => {
-    const terminal = createTerminalInstance();
+  }): Promise<AttachToContainer> {
     const { containerId, user } = options;
-    return new AttachToContainer(terminal, containerId, user);
-  },
+    return new AttachToContainer(this.terminal, containerId, user);
+  }
+}
 
-  [Commands.NukeEverything]: async (): Promise<NukeEverything> => {
-    const terminal = createTerminalInstance();
-    return new NukeEverything(terminal);
-  },
-
-  [Commands.StopContainers]: async (): Promise<StopContainers> => {
-    const terminal = createTerminalInstance();
-    return new StopContainers(terminal);
-  },
-};
-
-export const factory = (command: Commands) => {
-  const constructor = ConstructorMap[command];
-
-  return { getInstance: constructor };
+export const factory = () => {
+  return new Factory();
 };
