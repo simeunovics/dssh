@@ -3,9 +3,10 @@ import { AttachToContainer } from '../TerminalCommands/AttachToContainer';
 import { ListRunningContainers } from '../TerminalCommands/ListRunningContainers';
 import { NukeEverything } from '../TerminalCommands/NukeEverything';
 import { StopContainers } from '../TerminalCommands/StopContainers';
+import { ITerminal } from '../Interfaces';
 
-class Factory {
-  public constructor(private terminal = createTerminalInstance()) {}
+export class Factory {
+  public constructor(private terminal: ITerminal) {}
 
   public async ListRunningContainers(): Promise<ListRunningContainers> {
     return new ListRunningContainers(this.terminal);
@@ -28,6 +29,6 @@ class Factory {
   }
 }
 
-export const factory = () => {
-  return new Factory();
+export const factory = (terminal: ITerminal = createTerminalInstance()) => {
+  return new Factory(terminal);
 };
