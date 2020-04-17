@@ -1,20 +1,22 @@
-import createTerminalInstance from '../Services/Terminal';
-import { ITerminalCommand, ITerminal } from '../Interfaces';
+import { ITerminal } from '../Interfaces';
+import { TerminalCommand } from './TerminalCommand';
 
-export class AttachToContainer implements ITerminalCommand {
+export class AttachToContainer extends TerminalCommand {
   public constructor(
-    private terminal: ITerminal = terminal,
+    terminal: ITerminal,
     private containerId: string,
     private user: string
-  ) {}
-
-  private toString() {
-    return `docker exec --user ${this.user} -it ${this.containerId} bash`;
+  ) {
+    super(terminal);
   }
 
   public async execute(): Promise<void> {
     const command = this.toString();
 
     await this.terminal.interactiveShell(command);
+  }
+
+  private toString() {
+    return `docker exec --user ${this.user} -it ${this.containerId} bash`;
   }
 }

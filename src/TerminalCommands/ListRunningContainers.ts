@@ -1,10 +1,8 @@
-import createTerminalInstance from '../Services/Terminal';
-import { ITerminalCommand, ITerminal, IContainer } from '../Interfaces';
+import { IContainer } from '../Interfaces';
+import { TerminalCommand } from './TerminalCommand';
 
-export class ListRunningContainers implements ITerminalCommand {
+export class ListRunningContainers extends TerminalCommand {
   private command: string = `docker ps --format '{{.ID}}\t{{.Names}}'`;
-
-  public constructor(private terminal: ITerminal = terminal) {}
 
   public async execute(): Promise<IContainer[]> {
     const response = await this.terminal.execute(this.command);
