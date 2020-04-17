@@ -1,7 +1,7 @@
 import createTerminalInstance from '../Services/Terminal';
 import { ITerminalCommand, ITerminal } from '../Interfaces';
 
-class NukeEverything implements ITerminalCommand {
+export class NukeEverything implements ITerminalCommand {
   private command: string = 'docker system prune --all --volumes --force';
   public constructor(private terminal: ITerminal = terminal) {}
 
