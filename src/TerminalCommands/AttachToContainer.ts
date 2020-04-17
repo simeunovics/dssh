@@ -1,7 +1,7 @@
 import createTerminalInstance from '../Services/Terminal';
 import { ITerminalCommand, ITerminal } from '../Interfaces';
 
-class AttachToContainer implements ITerminalCommand {
+export class AttachToContainer implements ITerminalCommand {
   public constructor(
     private terminal: ITerminal = terminal,
     private containerId: string,
