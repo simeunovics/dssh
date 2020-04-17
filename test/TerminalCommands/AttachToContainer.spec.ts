@@ -15,5 +15,7 @@ test('it can attach to running container', async () => {
   await command.execute();
 
   expect(terminal.interactiveShell).toBeCalledTimes(1);
-  expect(terminal.interactiveShell).toBeCalledWith(await command.toString());
+  expect(terminal.interactiveShell).toBeCalledWith(
+    'docker exec --user root -it 123123123 bash'
+  );
 });
