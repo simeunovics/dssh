@@ -1,7 +1,7 @@
 import createTerminalInstance from '../Services/Terminal';
 import { ITerminalCommand, ITerminal, IContainer } from '../Interfaces';
 
-class ListRunningContainers implements ITerminalCommand {
+export class ListRunningContainers implements ITerminalCommand {
   private command: string = `docker ps --format '{{.ID}}\t{{.Names}}'`;
 
   public constructor(private terminal: ITerminal = terminal) {}
