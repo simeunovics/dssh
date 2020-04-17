@@ -1,11 +1,11 @@
 import createTerminal from '../../src/Services/Terminal';
-import createCommand from '../../src/TerminalCommands/ListRunningContainers';
+import { ListRunningContainers } from '../../src/TerminalCommands/ListRunningContainers';
 
 test('it can execute command with terminal', async () => {
   const terminal = createTerminal();
   terminal.execute = jest.fn(async () => 'df21d3661f4f\tTest Container');
 
-  const command = createCommand(terminal);
+  const command = new ListRunningContainers(terminal);
   const response = await command.execute();
 
   expect(terminal.execute).toBeCalledTimes(1);

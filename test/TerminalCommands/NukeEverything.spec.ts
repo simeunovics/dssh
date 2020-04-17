@@ -1,11 +1,11 @@
 import createTerminal from '../../src/Services/Terminal';
-import createCommand from '../../src/TerminalCommands/NukeEverything';
+import { NukeEverything } from '../../src/TerminalCommands/NukeEverything';
 
 test('it can execute command with terminal', async () => {
   const terminal = createTerminal();
   terminal.execute = jest.fn();
 
-  const command = createCommand(terminal);
+  const command = new NukeEverything(terminal);
   await command.execute();
 
   expect(terminal.execute).toBeCalledTimes(1);

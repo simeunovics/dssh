@@ -1,11 +1,11 @@
 import createTerminal from '../../src/Services/Terminal';
-import createCommand from '../../src/TerminalCommands/StopContainers';
+import { StopContainers } from '../../src/TerminalCommands/StopContainers';
 
 test('it can execute command', async () => {
   const terminal = createTerminal();
   terminal.execute = jest.fn();
 
-  const command = createCommand(terminal);
+  const command = new StopContainers(terminal);
   await command.execute();
 
   expect(terminal.execute).toBeCalledTimes(1);

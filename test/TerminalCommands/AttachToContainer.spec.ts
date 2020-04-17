@@ -1,17 +1,11 @@
 import createTerminal from '../../src/Services/Terminal';
-import createCommand from '../../src/TerminalCommands/AttachToContainer';
+import { AttachToContainer } from '../../src/TerminalCommands/AttachToContainer';
 
 test('it can attach to running container', async () => {
   const terminal = createTerminal();
   terminal.interactiveShell = jest.fn(async () => 'done');
 
-  const command = createCommand(
-    {
-      user: 'root',
-      containerId: '123123123',
-    },
-    terminal
-  );
+  const command = new AttachToContainer(terminal, '123123123', 'root');
   await command.execute();
 
   expect(terminal.interactiveShell).toBeCalledTimes(1);
