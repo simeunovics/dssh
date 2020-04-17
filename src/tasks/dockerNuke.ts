@@ -1,14 +1,17 @@
-import { shellExec } from "../helpers";
+import { factory } from '../Services/CommandFactory';
 
-async function dockerStop(): Promise<Boolean> {
+async function dockerStop(): Promise<boolean> {
   try {
-    console.log("Removing EVERYTHING 💥");
-    const response = await shellExec(
-      "docker stop $(docker ps -a -q); docker rm $(docker ps -a -q); docker rmi -f $(docker images -a -q)"
-    );
-    console.log("");
-    console.log(response);
-    console.log("✅ Done.");
+    const stopContainersCommand = await factory().StopContainers();
+    await stopContainersCommand.execute();
+
+    const command = await factory().NukeEverything();
+
+    console.log('Removing EVERYTHING 💥');
+    await command.execute();
+    console.log('');
+    console.log('✅ Done.');
+
     return true;
   } catch (e) {
     console.error(e);
@@ -17,6 +20,6 @@ async function dockerStop(): Promise<Boolean> {
 }
 
 export default {
-  displayText: "Stop and remove ALL containers and ALL images ⚠️",
-  callback: dockerStop
-}
+  displayText: 'Stop and remove ALL containers and ALL images ⚠️',
+  callback: dockerStop,
+};
