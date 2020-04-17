@@ -4,27 +4,24 @@ import { ListRunningContainers } from '../TerminalCommands/ListRunningContainers
 import { NukeEverything } from '../TerminalCommands/NukeEverything';
 import { StopContainers } from '../TerminalCommands/StopContainers';
 
-export enum Registered {
+export enum Commands {
   AttachToContainer = 'AttachToContainer',
   ListRunningContainers = 'ListRunningContainers',
   NukeEverything = 'NukeEverything',
   StopContainers = 'StopContainers',
 }
 
-type CommandTypeConstructorMap = Record<
-  Registered,
-  (args?: any) => Promise<any>
->;
+type CommandTypeConstructorMap = Record<Commands, (args?: any) => Promise<any>>;
 
 const ConstructorMap: CommandTypeConstructorMap = {
-  [Registered.ListRunningContainers]: async (): Promise<
+  [Commands.ListRunningContainers]: async (): Promise<
     ListRunningContainers
   > => {
     const terminal = createTerminalInstance();
     return new ListRunningContainers(terminal);
   },
 
-  [Registered.AttachToContainer]: async (options: {
+  [Commands.AttachToContainer]: async (options: {
     containerId: string;
     user: string;
   }): Promise<AttachToContainer> => {
@@ -33,18 +30,18 @@ const ConstructorMap: CommandTypeConstructorMap = {
     return new AttachToContainer(terminal, containerId, user);
   },
 
-  [Registered.NukeEverything]: async (): Promise<NukeEverything> => {
+  [Commands.NukeEverything]: async (): Promise<NukeEverything> => {
     const terminal = createTerminalInstance();
     return new NukeEverything(terminal);
   },
 
-  [Registered.StopContainers]: async (): Promise<StopContainers> => {
+  [Commands.StopContainers]: async (): Promise<StopContainers> => {
     const terminal = createTerminalInstance();
     return new StopContainers(terminal);
   },
 };
 
-export const factory = (command: Registered) => {
+export const factory = (command: Commands) => {
   const constructor = ConstructorMap[command];
 
   return { getInstance: constructor };

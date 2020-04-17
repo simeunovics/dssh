@@ -1,6 +1,7 @@
 import * as inquirer from 'inquirer';
 import listRunningContainers from '../TerminalCommands/ListRunningContainers';
 import attachToContainer from '../TerminalCommands/AttachToContainer';
+import { factory } from '../Services/CommandFactory';
 
 const BYE_MESSAGE = 'Bye... 👋';
 const PICK_USER_QUESTION = 'As user';
