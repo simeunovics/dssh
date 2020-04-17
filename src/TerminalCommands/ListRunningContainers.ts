@@ -7,9 +7,6 @@ class ListRunningContainers implements ITerminalCommand {
   public async toString() {
     return `docker ps --format '{{.ID}}\t{{.Names}}'`;
   }
-  public async getDescription() {
-    return 'Get list of running containers';
-  }
 
   public async execute(): Promise<IContainer[]> {
     const command = await this.toString();

@@ -8,13 +8,6 @@ class NukeEverything implements ITerminalCommand {
     return 'docker system prune --all --volumes --force';
   }
 
-  public async getDescription() {
-    return (
-      'Wipe out all unused(stopped) docker resources.' +
-      ' It will remove all containers, images, volumes, networks etc.'
-    );
-  }
-
   public async execute(): Promise<void> {
     const command = await this.toString();
 

@@ -12,17 +12,6 @@ test('it will list all currently running containers', async () => {
   );
 });
 
-test('it will have correct description', async () => {
-  const command = createCommand({
-    user: 'root',
-    containerId: '123123123',
-  });
-
-  expect(await command.getDescription()).toEqual(
-    'Attach to running container.'
-  );
-});
-
 test('it can attach to running container', async () => {
   const terminal = createTerminal();
   terminal.interactiveShell = jest.fn(async () => 'done');

@@ -9,14 +9,6 @@ test('it will list all currently running containers', async () => {
   );
 });
 
-test('it will have correct description', async () => {
-  const command = createCommand();
-
-  expect(await command.getDescription()).toEqual(
-    'Get list of running containers'
-  );
-});
-
 test('it can execute command with terminal', async () => {
   const terminal = createTerminal();
   terminal.execute = jest.fn(async () => 'df21d3661f4f\tTest Container');

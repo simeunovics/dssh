@@ -9,14 +9,6 @@ test('it will clear all docker resources globally', async () => {
   );
 });
 
-test('it will have correct description', async () => {
-  const command = createCommand();
-
-  expect(await command.getDescription()).toEqual(
-    'Wipe out all unused(stopped) docker resources. It will remove all containers, images, volumes, networks etc.'
-  );
-});
-
 test('it can execute command with terminal', async () => {
   const terminal = createTerminal();
   terminal.execute = jest.fn();

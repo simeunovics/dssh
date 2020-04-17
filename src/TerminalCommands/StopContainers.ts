@@ -8,10 +8,6 @@ class StopContainers implements ITerminalCommand {
     return 'docker stop $(docker ps -a -q)';
   }
 
-  public async getDescription() {
-    return 'Stop all running containers containers';
-  }
-
   public async execute(): Promise<void> {
     const command = await this.toString();
 

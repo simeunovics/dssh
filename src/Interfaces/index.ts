@@ -4,7 +4,6 @@ export interface ITerminal {
 }
 export interface ITerminalCommand {
   toString(): Promise<string>;
-  getDescription(): Promise<string>;
   execute(): any;
 }
 

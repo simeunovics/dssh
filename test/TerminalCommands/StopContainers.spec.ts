@@ -7,14 +7,6 @@ test('it will return correct stringified command', async () => {
   expect(await command.toString()).toEqual('docker stop $(docker ps -a -q)');
 });
 
-test('it will return proper description', async () => {
-  const command = createCommand();
-
-  expect(await command.getDescription()).toEqual(
-    'Stop all running containers containers'
-  );
-});
-
 test('it can execute command', async () => {
   const terminal = createTerminal();
   terminal.execute = jest.fn();

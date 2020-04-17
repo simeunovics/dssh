@@ -12,10 +12,6 @@ class AttachToContainer implements ITerminalCommand {
     return `docker exec --user ${this.user} -it ${this.containerId} bash`;
   }
 
-  public async getDescription() {
-    return 'Attach to running container.';
-  }
-
   public async execute(): Promise<void> {
     const command = await this.toString();
 
