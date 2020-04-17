@@ -2,10 +2,10 @@ import { IContainer } from '../Interfaces';
 import { TerminalCommand } from './TerminalCommand';
 
 export class ListRunningContainers extends TerminalCommand {
-  private command: string = `docker ps --format '{{.ID}}\t{{.Names}}'`;
-
   public async execute(): Promise<IContainer[]> {
-    const response = await this.terminal.execute(this.command);
+    const response = await this.terminal.execute(
+      `docker ps --format '{{.ID}}\t{{.Names}}'`
+    );
 
     const containers = response
       .trim()

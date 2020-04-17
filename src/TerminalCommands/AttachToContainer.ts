@@ -11,12 +11,8 @@ export class AttachToContainer extends TerminalCommand {
   }
 
   public async execute(): Promise<void> {
-    const command = this.toString();
-
-    await this.terminal.interactiveShell(command);
-  }
-
-  private toString() {
-    return `docker exec --user ${this.user} -it ${this.containerId} bash`;
+    await this.terminal.interactiveShell(
+      `docker exec --user ${this.user} -it ${this.containerId} bash`
+    );
   }
 }
