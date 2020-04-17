@@ -1,5 +1,4 @@
 import * as inquirer from 'inquirer';
-import attachToContainer from '../TerminalCommands/AttachToContainer';
 import { factory } from '../Services/CommandFactory';
 
 const BYE_MESSAGE = 'Bye... 👋';
@@ -34,7 +33,7 @@ async function attachToRunningContainer(): Promise<boolean> {
       .reduce((next, prev) => ({ ...next, ...prev })).id;
 
     const user = answers[PICK_USER_QUESTION];
-    const command = attachToContainer({ containerId, user });
+    const command = await factory().AttachToContainer({ containerId, user });
 
     await command.execute();
     console.log(BYE_MESSAGE);

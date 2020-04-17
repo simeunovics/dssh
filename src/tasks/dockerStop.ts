@@ -1,8 +1,8 @@
-import createCommand from '../TerminalCommands/StopContainers';
+import { factory } from '../Services/CommandFactory';
 
 async function dockerStop(): Promise<boolean> {
   try {
-    const command = createCommand();
+    const command = await factory().StopContainers();
 
     console.log('🛑 Stopping all containers...');
     await command.execute();

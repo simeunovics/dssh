@@ -1,8 +1,11 @@
-import createCommand from '../TerminalCommands/NukeEverything';
+import { factory } from '../Services/CommandFactory';
 
 async function dockerStop(): Promise<boolean> {
   try {
-    const command = createCommand();
+    const stopContainersCommand = await factory().StopContainers();
+    await stopContainersCommand.execute();
+
+    const command = await factory().NukeEverything();
 
     console.log('Removing EVERYTHING 💥');
     await command.execute();
