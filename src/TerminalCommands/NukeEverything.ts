@@ -9,8 +9,3 @@ export class NukeEverything implements ITerminalCommand {
     await this.terminal.execute(this.command);
   }
 }
-
-export default (terminal?: ITerminal): NukeEverything => {
-  const terminalInstance = terminal || createTerminalInstance();
-  return new NukeEverything(terminalInstance);
-};

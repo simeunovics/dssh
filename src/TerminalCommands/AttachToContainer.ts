@@ -18,12 +18,3 @@ export class AttachToContainer implements ITerminalCommand {
     await this.terminal.interactiveShell(command);
   }
 }
-
-export default (
-  options: { containerId: string; user: string },
-  terminal?: ITerminal
-): AttachToContainer => {
-  const terminalInstance = terminal || createTerminalInstance();
-  const { user, containerId } = options;
-  return new AttachToContainer(terminalInstance, containerId, user);
-};

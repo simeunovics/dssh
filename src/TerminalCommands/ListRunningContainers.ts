@@ -27,8 +27,3 @@ export class ListRunningContainers implements ITerminalCommand {
     };
   }
 }
-
-export default (terminal?: ITerminal): ListRunningContainers => {
-  const terminalInstance = terminal || createTerminalInstance();
-  return new ListRunningContainers(terminalInstance);
-};

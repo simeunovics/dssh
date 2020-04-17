@@ -9,8 +9,3 @@ export class StopContainers implements ITerminalCommand {
     await this.terminal.execute(this.command);
   }
 }
-
-export default (terminal?: ITerminal): StopContainers => {
-  const terminalInstance = terminal || createTerminalInstance();
-  return new StopContainers(terminalInstance);
-};
