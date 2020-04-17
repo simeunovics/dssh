@@ -1,12 +1,14 @@
-import { shellExec } from "../helpers";
+import { factory } from '../Services/CommandFactory';
 
-async function dockerStop(): Promise<Boolean> {
+async function dockerStop(): Promise<boolean> {
   try {
-    console.log("🛑 Stopping all containers...");
-    const response = await shellExec("docker stop $(docker ps -a -q);");
-    console.log("");
-    console.log(response);
-    console.log("✅ Done.");
+    const command = await factory().StopContainers();
+
+    console.log('🛑 Stopping all containers...');
+    await command.execute();
+    console.log('');
+    console.log('✅ Done.');
+
     return true;
   } catch (e) {
     console.error(e);
@@ -15,6 +17,6 @@ async function dockerStop(): Promise<Boolean> {
 }
 
 export default {
-  displayText: "Stop all running containers",
-  callback: dockerStop
-}
+  displayText: 'Stop all running containers',
+  callback: dockerStop,
+};
