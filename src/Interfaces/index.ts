@@ -3,7 +3,6 @@ export interface ITerminal {
   interactiveShell(command: string): Promise<string>;
 }
 export interface ITerminalCommand {
-  toString(): Promise<string>;
   execute(): any;
 }
 

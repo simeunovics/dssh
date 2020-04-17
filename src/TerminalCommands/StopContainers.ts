@@ -2,16 +2,11 @@ import createTerminalInstance from '../Services/Terminal';
 import { ITerminalCommand, ITerminal } from '../Interfaces';
 
 class StopContainers implements ITerminalCommand {
+  private command: string = 'docker stop $(docker ps -a -q)';
   public constructor(private terminal: ITerminal = terminal) {}
 
-  public async toString() {
-    return 'docker stop $(docker ps -a -q)';
-  }
-
   public async execute(): Promise<void> {
-    const command = await this.toString();
-
-    await this.terminal.execute(command);
+    await this.terminal.execute(this.command);
   }
 }
 
