@@ -1,5 +1,4 @@
 import * as inquirer from 'inquirer';
-import listRunningContainers from '../TerminalCommands/ListRunningContainers';
 import attachToContainer from '../TerminalCommands/AttachToContainer';
 import { factory } from '../Services/CommandFactory';
 
@@ -8,7 +7,7 @@ const PICK_USER_QUESTION = 'As user';
 const PICK_CONTAINER_QUESTION = 'Attach to container';
 
 const getRunningContainers = async () => {
-  const terminalCommand = listRunningContainers();
+  const terminalCommand = await factory().ListRunningContainers();
   return terminalCommand.execute();
 };
 
