@@ -8,7 +8,6 @@ export class ListRunningContainers extends TerminalCommand {
     );
 
     const containers = response
-      .trim()
       .split('\n')
       .filter((row) => Boolean(row.length))
       .map(this.containerFromString);
