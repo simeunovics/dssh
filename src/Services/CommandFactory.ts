@@ -6,6 +6,7 @@ import { StopContainers } from '../TerminalCommands/StopContainers';
 import { DockerImageSearch } from '../TerminalCommands/DockerImageSearch';
 import { ITerminal } from '../Interfaces';
 import { RunContainer } from '../TerminalCommands/RunContainer';
+import createTabulatedTable from '../Services/TabulatedTable';
 
 export class Factory {
   public constructor(private terminal: ITerminal) {}
@@ -23,7 +24,7 @@ export class Factory {
   }
 
   public async DockerImageSearch(query: string): Promise<DockerImageSearch> {
-    return new DockerImageSearch(this.terminal, query);
+    return new DockerImageSearch(this.terminal, query, createTabulatedTable);
   }
 
   public async RunContainer(image: string): Promise<RunContainer> {

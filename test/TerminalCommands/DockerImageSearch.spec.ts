@@ -1,4 +1,5 @@
 import createTerminal from '../../src/Services/Terminal';
+import createTabulatedTable from '../../src/Services/TabulatedTable';
 import { DockerImageSearch } from '../../src/TerminalCommands/DockerImageSearch';
 
 test('it can execute command', async () => {
@@ -7,7 +8,7 @@ test('it can execute command', async () => {
     async () => `node	Node.js is a JavaScript-based platform for s…	8714	[OK]`
   );
 
-  const command = new DockerImageSearch(terminal, 'node');
+  const command = new DockerImageSearch(terminal, 'node', createTabulatedTable);
   const result = await command.execute();
 
   expect(terminal.execute).toBeCalledTimes(1);
