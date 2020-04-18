@@ -15,7 +15,7 @@ export class ListDockerComposeFiles extends TerminalCommand {
     const files = await this.fileSystem.listFiles(this.directoryPath);
 
     const validFiles = [];
-    for (let file of files) {
+    for (const file of files) {
       if (await this.isValidDockerFile(file.absolutePath)) {
         validFiles.push(file);
       }
