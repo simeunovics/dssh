@@ -11,6 +11,6 @@ export class TerminalCommand implements ITerminalCommand {
       );
     }
 
-    this.terminal.execute(this.command);
+    await this.terminal.execute(this.command);
   }
 }
