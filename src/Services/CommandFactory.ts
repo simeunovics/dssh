@@ -12,7 +12,7 @@ export class Factory {
   public constructor(private terminal: ITerminal) {}
 
   public async ListRunningContainers(): Promise<ListRunningContainers> {
-    return new ListRunningContainers(this.terminal);
+    return new ListRunningContainers(this.terminal, createTabulatedTable);
   }
 
   public async NukeEverything(): Promise<NukeEverything> {
