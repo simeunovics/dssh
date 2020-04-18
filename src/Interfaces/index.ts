@@ -18,3 +18,7 @@ export interface IDockerImage {
   isOfficial: boolean;
   isAutomated: boolean;
 }
+
+export interface IFileLocation {
+  absolutePath: string;
+}
