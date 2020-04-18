@@ -3,7 +3,9 @@ import { AttachToContainer } from '../TerminalCommands/AttachToContainer';
 import { ListRunningContainers } from '../TerminalCommands/ListRunningContainers';
 import { NukeEverything } from '../TerminalCommands/NukeEverything';
 import { StopContainers } from '../TerminalCommands/StopContainers';
+import { DockerImageSearch } from '../TerminalCommands/DockerImageSearch';
 import { ITerminal } from '../Interfaces';
+import { RunContainer } from '../TerminalCommands/RunContainer';
 
 export class Factory {
   public constructor(private terminal: ITerminal) {}
@@ -18,6 +20,14 @@ export class Factory {
 
   public async StopContainers(): Promise<StopContainers> {
     return new StopContainers(this.terminal);
+  }
+
+  public async DockerImageSearch(query: string): Promise<DockerImageSearch> {
+    return new DockerImageSearch(this.terminal, query);
+  }
+
+  public async RunContainer(image: string): Promise<RunContainer> {
+    return new RunContainer(this.terminal, image);
   }
 
   public async AttachToContainer(options: {
