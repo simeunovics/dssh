@@ -11,9 +11,7 @@ const searchImages = async (query) => {
 };
 
 const getDisplayText = (image) => {
-  return `${image.isOfficial ? chalk.green('·') : chalk.grey('·')} ${chalk.bold(
-    image.name
-  )} ${image.description}`;
+  return `${image.isOfficial ? chalk.green(image.name) : image.name}`;
 };
 
 const pickContainer = async () => {
@@ -21,7 +19,7 @@ const pickContainer = async () => {
     {
       type: 'autocomplete',
       name: 'container_to_run',
-      message: 'Select container to run',
+      message: 'Select container to run:',
       source: async function (_, input) {
         if (!Boolean(input)) {
           return [];
@@ -39,10 +37,27 @@ const pickContainer = async () => {
   return answer.container_to_run;
 };
 
+const pickVersion = async () => {
+  const answer = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'version',
+      message: 'Select version',
+      default: 'latest',
+    },
+  ]);
+
+  return answer.version;
+};
+
 async function runContainer() {
   try {
     const container = await pickContainer();
-    const runContainerCommand = await factory().RunContainer(container);
+    const version = await pickVersion();
+
+    const runContainerCommand = await factory().RunContainer(
+      `${container}:${version}`
+    );
     await runContainerCommand.execute();
 
     return true;
