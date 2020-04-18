@@ -12,10 +12,10 @@ export class FileSystem {
       this.disk.readdir(absolutePath, { withFileTypes: true }, (err, items) => {
         if (err) rej(err);
 
-        const files = items
+        const onlyFiles = items
           .filter((item) => !item.isDirectory())
           .map(({ name }) => name);
-        res(files);
+        res(onlyFiles);
       });
     });
 
