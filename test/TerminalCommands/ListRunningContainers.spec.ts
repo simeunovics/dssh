@@ -1,11 +1,12 @@
 import createTerminal from '../../src/Services/Terminal';
+import createTabulatedTable from '../../src/Services/TabulatedTable';
 import { ListRunningContainers } from '../../src/TerminalCommands/ListRunningContainers';
 
 test('it can execute command with terminal', async () => {
   const terminal = createTerminal();
   terminal.execute = jest.fn(async () => 'df21d3661f4f\tTest Container');
 
-  const command = new ListRunningContainers(terminal);
+  const command = new ListRunningContainers(terminal, createTabulatedTable);
   const response = await command.execute();
 
   expect(terminal.execute).toBeCalledTimes(1);

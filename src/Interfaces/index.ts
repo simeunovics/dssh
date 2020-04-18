@@ -10,3 +10,11 @@ export interface IContainer {
   name: string;
   id: string;
 }
+
+export interface IDockerImage {
+  name: string;
+  description: string;
+  starCount: number;
+  isOfficial: boolean;
+  isAutomated: boolean;
+}

@@ -1,6 +1,6 @@
 {
   "name": "dssh",
-  "version": "2.3.8",
+  "version": "2.4.0",
   "description": "CLI utility providing handy docker shortcuts",
   "main": "build/app.js",
   "scripts": {
@@ -19,7 +19,9 @@
   "license": "MIT",
   "dependencies": {
     "@types/inquirer": "^6.5.0",
-    "inquirer": "^7.1.0"
+    "chalk": "^4.0.0",
+    "inquirer": "^7.1.0",
+    "inquirer-autocomplete-prompt": "^1.0.2"
   },
   "homepage": "https://github.com/simeunovics/dssh",
   "repository": {

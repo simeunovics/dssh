@@ -3,6 +3,8 @@ import { AttachToContainer } from '../../src/TerminalCommands/AttachToContainer'
 import { ListRunningContainers } from '../../src/TerminalCommands/ListRunningContainers';
 import { NukeEverything } from '../../src/TerminalCommands/NukeEverything';
 import { StopContainers } from '../../src/TerminalCommands/StopContainers';
+import { DockerImageSearch } from '../../src/TerminalCommands/DockerImageSearch';
+import { RunContainer } from '../../src/TerminalCommands/RunContainer';
 
 test('it can create AttachToContainer command', async () => {
   const options = {
@@ -30,4 +32,16 @@ test('it can create StopContainers command', async () => {
   const command = await factory().StopContainers();
 
   expect(command).toBeInstanceOf(StopContainers);
+});
+
+test('it can create DockerImageSearch command', async () => {
+  const command = await factory().DockerImageSearch('image-name');
+
+  expect(command).toBeInstanceOf(DockerImageSearch);
+});
+
+test('it can create RunContainer command', async () => {
+  const command = await factory().RunContainer('image-name');
+
+  expect(command).toBeInstanceOf(RunContainer);
 });
