@@ -68,6 +68,6 @@ async function runContainer() {
 }
 
 export default {
-  displayText: 'SSH into arbitrary container.',
+  displayText: 'Run any container',
   callback: runContainer,
 };
