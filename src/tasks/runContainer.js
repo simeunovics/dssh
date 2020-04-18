@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import autocomplete from 'inquirer-autocomplete-prompt';
 import { factory } from '../Services/CommandFactory';
 
+inquirer.registerPrompt('autocomplete', autocomplete);
 const searchImages = async (query) => {
   const command = await factory().DockerImageSearch(query);
 
@@ -15,33 +16,33 @@ const getDisplayText = (image) => {
   )} ${image.description}`;
 };
 
+const pickContainer = async () => {
+  const answer = await inquirer.prompt([
+    {
+      type: 'autocomplete',
+      name: 'container_to_run',
+      message: 'Select container to run',
+      source: async function (_, input) {
+        if (!Boolean(input)) {
+          return [];
+        }
+
+        const images = await searchImages(input);
+        return images.map((image) => ({
+          name: getDisplayText(image),
+          value: image.name,
+        }));
+      },
+    },
+  ]);
+
+  return answer.container_to_run;
+};
+
 async function runContainer() {
   try {
-    inquirer.registerPrompt('autocomplete', autocomplete);
-    const answer = await inquirer.prompt([
-      {
-        type: 'autocomplete',
-        name: 'container_to_run',
-        message: 'Select container to run',
-        source: async function (_, input) {
-          if (!Boolean(input)) {
-            return [];
-          }
-
-          const images = await searchImages(input);
-
-          return images.map((image) => ({
-            name: getDisplayText(image),
-            short: image.description,
-            value: image.name,
-          }));
-        },
-      },
-    ]);
-
-    const { container_to_run } = answer;
-    const runContainerCommand = await factory().RunContainer(container_to_run);
-
+    const container = await pickContainer();
+    const runContainerCommand = await factory().RunContainer(container);
     await runContainerCommand.execute();
 
     return true;
