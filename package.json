@@ -1,6 +1,6 @@
 {
   "name": "dssh",
-  "version": "2.3.8",
+  "version": "2.4.0",
   "description": "CLI utility providing handy docker shortcuts",
   "main": "build/app.js",
   "scripts": {
