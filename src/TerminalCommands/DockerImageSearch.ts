@@ -5,6 +5,7 @@ export class DockerImageSearch extends TerminalCommand {
   public constructor(terminal: ITerminal, private query: string) {
     super(terminal);
   }
+
   public async execute(): Promise<IDockerImage[]> {
     const format =
       '{{.Name}}\t{{.Description}}\t{{.StarCount}}\t{{.IsOfficial}}\t{{.IsAutomated}}';
@@ -12,7 +13,6 @@ export class DockerImageSearch extends TerminalCommand {
       `docker search ${this.query.trim()} --format '${format}'`
     );
     const images = result
-      .trim()
       .split('\n')
       .filter((row) => Boolean(row.length))
       .map(this.convertDSNToImage);
