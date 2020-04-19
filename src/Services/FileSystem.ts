@@ -36,7 +36,7 @@ export class FileSystem {
   ): IFileLocation {
     const absolutePathToFile = this.pathUtil.join(absolutePath, fileName);
 
-    return { absolutePath: absolutePathToFile };
+    return { absolutePath: absolutePathToFile, name: fileName };
   }
 }
 

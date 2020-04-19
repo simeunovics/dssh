@@ -18,7 +18,7 @@ test('it can list directory for files', async () => {
 
   expect(files.length).toEqual(2);
   expect(files).toEqual([
-    { absolutePath: 'dummy-folder/a' },
-    { absolutePath: 'dummy-folder/b' },
+    { absolutePath: 'dummy-folder/a', name: 'a' },
+    { absolutePath: 'dummy-folder/b', name: 'b' },
   ]);
 });

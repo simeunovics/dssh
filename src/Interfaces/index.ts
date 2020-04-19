@@ -21,4 +21,5 @@ export interface IDockerImage {
 
 export interface IFileLocation {
   absolutePath: string;
+  name: string;
 }
