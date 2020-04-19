@@ -69,17 +69,19 @@ async function runDockerComposeFile(): Promise<boolean> {
       return;
     }
 
+    const terminal = createTerminal();
     const file = await pickDockerComposeFile(dockerFiles);
-    const detached = await shouldRunDetached();
     const operation = await pickOperation();
 
-    const terminal = createTerminal();
-    const flag = detached ? '-d' : '';
-    const command = `docker-compose -f ${file} ${operation} ${flag}`;
+    if (operation === 'down') {
+      await terminal.interactiveShell(`docker-compose -f ${file} down`);
+      return true;
+    }
 
-    detached
-      ? await terminal.interactiveShell(command)
-      : await terminal.execute(command);
+    const detached = await shouldRunDetached();
+    await terminal.interactiveShell(
+      `docker-compose -f ${file} up ${detached ? '-d' : ''}`
+    );
 
     console.log(BYE_MESSAGE);
 
