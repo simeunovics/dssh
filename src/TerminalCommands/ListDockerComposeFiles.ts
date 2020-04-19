@@ -12,16 +12,23 @@ export class ListDockerComposeFiles extends TerminalCommand {
   }
 
   public async execute(): Promise<IFileLocation[]> {
-    const files = await this.fileSystem.listFiles(this.directoryPath);
+    const allFiles = await this.fileSystem.listFiles(this.directoryPath);
 
-    const validFiles = [];
-    for (const file of files) {
-      if (await this.isValidDockerFile(file.absolutePath)) {
-        validFiles.push(file);
-      }
-    }
+    const filesWithValidFlag = await Promise.all(
+      allFiles.map(async (file) => {
+        return {
+          ...file,
+          isValid: await this.isValidDockerFile(file.absolutePath),
+        };
+      })
+    );
 
-    return validFiles;
+    return filesWithValidFlag
+      .filter((file) => file.isValid)
+      .map((file) => ({
+        name: file.name,
+        absolutePath: file.absolutePath,
+      }));
   }
 
   private async isValidDockerFile(filePath: string): Promise<boolean> {
