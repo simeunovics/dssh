@@ -35,8 +35,8 @@ const shouldRunDetached = async (): Promise<boolean> => {
       name: 'runDetached',
       message: 'Pick mode:',
       choices: [
-        { name: 'Detached (-d)', value: true },
         { name: 'Attached', value: false },
+        { name: 'Detached (-d)', value: true },
       ],
     },
   ]);
