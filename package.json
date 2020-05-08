@@ -33,10 +33,10 @@
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "@types/node": "^13.11.1",
-    "babel-jest": "^26.0.0",
-    "jest": "^25.3.0",
-    "ts-jest": "^25.3.1",
+    "@types/node": "^13.13.5",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1",
+    "ts-jest": "^25.5.0",
     "typescript": "^3.8.3"
   }
 }
