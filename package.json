@@ -32,11 +32,11 @@
     "node": ">= 10.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.1",
+    "@types/jest": "^25.2.2",
     "@types/node": "^14.0.1",
     "babel-jest": "^26.0.1",
     "jest": "^26.0.1",
-    "ts-jest": "^25.5.0",
-    "typescript": "^3.8.3"
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.9.2"
   }
 }
