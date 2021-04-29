@@ -1,0 +1,27 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.24
+    - 14.14.30
+    - 14.14.34
+    - 14.14.36
+    - 14.14.39
+    - 14.14.41
+    - 15.0.0
+  - dependency-name: "@types/jest"
+    versions:
+    - 26.0.21
+    - 26.0.22
+  - dependency-name: ts-jest
+    versions:
+    - 26.5.4
+  - dependency-name: typescript
+    versions:
+    - 4.1.4
